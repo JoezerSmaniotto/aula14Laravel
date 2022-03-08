@@ -34,7 +34,7 @@
     @else
         <p>Produto não encontrado! </p>
     @endif
-    <a href="/produtos">voltar para listagem de todos os produtos</a>
+    <a href="{{ route('index') }}">voltar para listagem de todos os produtos</a>
 
 </body>
 

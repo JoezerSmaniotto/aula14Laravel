@@ -16,8 +16,10 @@ class UsuarioController extends Controller
         return view('usuarios',['usuarios'=>$this->usuario->all()]);
     }
 
-    public function show(Request $request, $id) {
-        $this->usuario = new Usuario();
-        return view('usuario', ['usuario'=>$this->usuario->find($id)]);
+    public function show($id) {
+        // $this->usuario = new Usuario();
+        // return view('usuario', ['usuario'=>$this->usuario->find($id)]);
+        //$produto = Produto::find($id); // Assim acessa de form a statica
+        return view('usuario', ['usuario'=>Usuario::find($id)]);
     }
 }

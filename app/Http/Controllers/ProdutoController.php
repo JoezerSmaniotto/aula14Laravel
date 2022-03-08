@@ -17,8 +17,25 @@ class ProdutoController extends Controller
         return view('produtos',['produtos'=>$this->produto->all()]);
     }
 
-    public function show(Request $request, $id) {
-        $this->produto = new Produto();
-        return view('produto', ['produto'=>$this->produto->find($id)]);
+    public function show($id) {
+    // public function show(Request $request, $id) {
+        // $this->produto = new Produto();
+        // return view('produto', ['produto'=>$this->produto->find($id)]);
+        return view('produto', ['produto'=>Produto::find($id)]);
+    }
+
+    public function create(){
+        return view('produto_create');//Nome do arquivo na view, sem a extensão
+    }
+
+    public function store(Request $request) {// CREATE PRODUTO
+
+        $newProduto = $request->all(); // tras todos os dados da requisição
+        $newProduto['importado']=($request->importado)?true:false; // validação
+        // dd($newProduto); // Uso para ver se  esta chegando os dados.
+        if(Produto::create($newProduto))
+            return redirect('/produtos');
+        else dd('Erro ao cadastrar produto');
+
     }
 }

@@ -28,13 +28,18 @@ Route::get('/', function () {
 
 // Chamando um controller
          // Rota  //1ºReferencia a classe COntroller, 2ºManda para o metodo index criado no Controller
-Route::get('/ola', [HomeController::class, 'index']);
-Route::get('/produtos', [ProdutoController::class, 'index']);
-Route::get('/produto/{id}', [ProdutoController::class, 'show']);
+Route::get('/ola', [HomeController::class, 'index']);        //Nomeia rotas
+Route::get('/produtos', [ProdutoController::class, 'index'])->name('index');
+Route::get('/produto/{id}', [ProdutoController::class, 'show'])->name('show');
+// crete
+Route::get('/produto', [ProdutoController::class, 'create']);
+Route::post('/produto', [ProdutoController::class, 'store']);
 
+// USUARIOS
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/usuario/{id}', [UsuarioController::class, 'show']);
 
+// PETS
 Route::get('/pets', [PetController::class, 'index']);
 Route::get('/pet/{id}', [PetController::class, 'show']);
 
