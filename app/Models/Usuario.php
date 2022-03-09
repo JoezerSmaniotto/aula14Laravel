@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Usuario extends Model
 {
     use HasFactory;
+    // Preeche as colunas com loren ipsum
+    protected $fillable = [
+        'nome',
+        'email',
+        'cpf',
+        'endereco',
+        'celular'
+    ];
 }
