@@ -10,6 +10,7 @@
 
 <body>
     <h1>Usuários</h1>
+    <a href="{{ route('createUser') }}">Criar</a>
     @if ($usuarios->count() > 0)
         <table>
             <thead>

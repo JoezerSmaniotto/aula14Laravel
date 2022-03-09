@@ -20,6 +20,7 @@
                     <th>cpf</th>
                     <th>endereco</th>
                     <th>celular</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,11 @@
                     <td>{{ $usuario->cpf }}</td>
                     <td>{{ $usuario->endereco }}</td>
                     <td>{{ $usuario->celular }}</td>
+                    <td>
+                        <a href="{{ route('editUser', $usuario->id) }}">Editar</a>
+                        <a href="{{ route('deleteUser', $usuario->id) }}">Deletar</a>
+
+                    </td>
 
                 </tr>
             </tbody>

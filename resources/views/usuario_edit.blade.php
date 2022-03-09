@@ -10,34 +10,39 @@
 
 <body>
     <h1>Insert new User</h1>
-    <form action="/usuario" method="POST">
+    <form action="{{ route('updateUser', $usuario->id) }}" method="POST">
         {{-- Obrigado a usar  @csrf criado um token para cada requisição --}}
         @csrf
         {{-- <input type="hidden" name="_token" value="{{csrf_token()}}"/> --}}
         <table>
             <tr>
                 <td>Nome:</td>
-                <td><input type="text" name="nome" /></td>
+                <td><input type="text" name="nome" value="{{ $usuario->nome }}" /></td>
             </tr>
             <tr>
                 <td>E-mail:</td>
-                <td><input type="text" name="email" /></td>
+                <td><input type="text" name="email" value="{{ $usuario->email }}" /></td>
             </tr>
             <tr>
                 <td>cpf:</td>
-                <td><input type="text" name="cpf" /></td>
+                <td><input type="text" name="cpf" value="{{ $usuario->cpf }}" /></td>
             </tr>
             <tr>
                 <td>Endereço:</td>
-                <td><input type="text" name="endereco" /></td>
+                <td><input type="text" name="endereco" value="{{ $usuario->endereco }}" /></td>
             </tr>
             <tr>
                 <td>Celular:</td>
-                <td><input type="text" name="celular" /></td>
+                <td><input type="text" name="celular" value="{{ $usuario->celular }}" /></td>
+            </tr>
+
+            <tr>
+                <td>Adotado:</td>
+                <td><input type="checkbox" name="adotado" {{ $usuario->adotado ? 'checked' : '' }} /></td>
             </tr>
 
             <tr align="center">
-                <td colspan="2"><input type="submit" value="Criar" /></td>
+                <td colspan="2"><input type="submit" value="Salvar" /></td>
             </tr>
             <tr align="center">
                 <td colspan="2"><a href="/usuarios" style="display: inline">&#9664;&nbsp;Voltar</a></td>

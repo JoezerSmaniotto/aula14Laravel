@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
+    //LIST
     public function index(){
         $this->usuario =  new Usuario();
         // return response()->json($this->usuario->all()); // TIPO JSON
@@ -22,7 +23,7 @@ class UsuarioController extends Controller
         //$usuario = usuario::find($id); // Assim acessa de form a statica
         return view('usuario', ['usuario'=>Usuario::find($id)]);
     }
-
+    //CREATE
     public function create(){
         return view('usuario_create');//Nome do arquivo na view, sem a extensão
     }
@@ -34,5 +35,29 @@ class UsuarioController extends Controller
         if(Usuario::create($newUsuario))
             return redirect('/usuarios');
         else dd('Erro ao cadastrar usuário');
+    }
+    //EDIT
+    public function edit($id){
+        return view('usuario_edit',['usuario'=>Usuario::find($id)]);
+    }
+
+    public function update(Request  $request, $id){
+        $updatedUsuario = $request->all();
+        $updatedUsuario['importado'] = ($request->importado) ? true : false;
+        if(!Usuario::find($id)->update($updatedUsuario))
+            dd("Erro ao atualizar o usuário $id !");
+        return redirect('/usuarios');
+    }
+     // DELETE
+     public function delete($id){
+        return view('usuario_remove',['usuario'=>Usuario::find($id)]);
+    }
+
+    public function remove(Request $request, $id){
+        if($request->confirmar === 'Deletar')
+            if(!Usuario::destroy($id))
+                dd("Erro ao deletar usuário $id !");
+        return redirect('/usuarios');
+
     }
 }

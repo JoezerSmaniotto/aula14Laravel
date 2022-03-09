@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProdutoController extends Controller
 {
     private $produto;
-
+    // LIST
     public function index(){
         $this->produto =  new Produto();
         // return response()->json($this->produto->all()); // TIPO JSON
@@ -23,7 +23,7 @@ class ProdutoController extends Controller
         // return view('produto', ['produto'=>$this->produto->find($id)]);
         return view('produto', ['produto'=>Produto::find($id)]);
     }
-
+    // CREATE
     public function create(){
         return view('produto_create');//Nome do arquivo na view, sem a extensão
     }
@@ -36,6 +36,29 @@ class ProdutoController extends Controller
         if(Produto::create($newProduto))
             return redirect('/produtos');
         else dd('Erro ao cadastrar produto');
+    }
+    // EDIT
+    public function edit($id){
+        return view('produto_edit',['produto'=>Produto::find($id)]);
+    }
+
+    public function update(Request  $request, $id){
+        $updatedProduto = $request->all();
+        $updatedProduto['importado'] = ($request->importado) ? true : false;
+        if(!Produto::find($id)->update($updatedProduto))
+            dd("Erro ao atualizar o produto $id !");
+        return redirect('/produtos');
+    }
+    // DELETE
+    public function delete($id){
+        return view('produto_remove',['produto'=>Produto::find($id)]);
+    }
+
+    public function remove(Request $request, $id){
+        if($request->confirmar === 'Deletar')
+            if(!Produto::destroy($id))
+                dd("Erro ao deletar produto $id !");
+        return redirect('/produtos');
 
     }
 }
