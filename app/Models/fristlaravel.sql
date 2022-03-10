@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 07-Mar-2022 às 01:41
+-- Tempo de geração: 10-Mar-2022 às 20:28
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.1.2
 
@@ -60,7 +60,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (5, '2022_03_06_175549_create_produtos_table', 1),
 (6, '2022_03_06_221816_create_usuarios_table', 1),
-(7, '2022_03_06_224400_create_pets_table', 1);
+(7, '2022_03_06_224400_create_pets_table', 1),
+(8, '2022_03_10_091414_create_solicitacaos_table', 1);
 
 -- --------------------------------------------------------
 
@@ -115,8 +116,8 @@ CREATE TABLE `pets` (
 --
 
 INSERT INTO `pets` (`id`, `nomePet`, `sexo`, `raca`, `inforAdic`, `idade`, `adotado`, `created_at`, `updated_at`) VALUES
-(1, 'bigo', 'M', 'vira', 'vacinado, revoltado', 5, 0, NULL, NULL),
-(2, 'Samantha', 'F', 'PitBull', 'Docil, vacinada', 2, 0, NULL, NULL);
+(1, 'Samantha', 'F', 'PitBull', 'Vacinada, bonita.', 2, 0, '2022-03-10 12:32:04', '2022-03-10 12:32:04'),
+(2, 'Trovão', 'M', 'Fila', 'Cão de Guarda', 9, 0, '2022-03-10 12:32:31', '2022-03-10 12:32:31');
 
 -- --------------------------------------------------------
 
@@ -134,6 +135,28 @@ CREATE TABLE `produtos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `solicitacaos`
+--
+
+CREATE TABLE `solicitacaos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nomeUserSolicitante` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pet` int(11) NOT NULL,
+  `aceita` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `solicitacaos`
+--
+
+INSERT INTO `solicitacaos` (`id`, `nomeUserSolicitante`, `pet`, `aceita`, `created_at`, `updated_at`) VALUES
+(2, 'Jonas', 1, 0, '2022-03-10 13:33:52', '2022-03-10 13:33:52');
 
 -- --------------------------------------------------------
 
@@ -174,8 +197,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `endereco`, `celular`, `created_at`, `updated_at`) VALUES
-(1, 'Joezer', 'joezer@gmail.com', '03259823093', 'Rua 1 Pelotas', '51982098735', NULL, NULL),
-(2, 'jonas', 'jonas@gmail.com', '03259823093', 'Rua 2 Pelotas', '51982098745', NULL, NULL);
+(1, 'joezer', 'joezer@gmail.com', '12345678910', 'Rua 1 Pelotas', '51991919292', '2022-03-10 12:29:40', '2022-03-10 12:29:40'),
+(2, 'jonas', 'jonas@gmail.com', '98765432198', '7 Setembro 44, Pelotas', '48981828182', '2022-03-10 12:30:28', '2022-03-10 12:30:28');
 
 --
 -- Índices para tabelas despejadas
@@ -221,6 +244,12 @@ ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `solicitacaos`
+--
+ALTER TABLE `solicitacaos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `users`
 --
 ALTER TABLE `users`
@@ -247,7 +276,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `personal_access_tokens`
@@ -259,13 +288,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de tabela `pets`
 --
 ALTER TABLE `pets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `solicitacaos`
+--
+ALTER TABLE `solicitacaos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `users`

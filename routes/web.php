@@ -2,6 +2,7 @@
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\SolicitacaoController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -68,3 +69,16 @@ Route::post('/pet/{id}/update', [PetController::class, 'update'])->name('updateP
 // Delete
 Route::get('/pet/{id}/delete', [PetController::class, 'delete'])->name('deletePet');
 Route::post('/pet/{id}/remove', [PetController::class, 'remove'])->name('removePet');
+
+// SOLICITAÇÃO----------------------------------
+Route::get('/solicitacoes', [SolicitacaoController::class, 'index']);
+Route::get('/solicitacao/{id}', [SolicitacaoController::class, 'show']);
+// Crete
+Route::get('/solicitacao', [SolicitacaoController::class, 'create'])->name('createSolicitacao');
+Route::post('/solicitacao', [SolicitacaoController::class, 'store']);
+// Update
+Route::get('/solicitacao/{id}/edit', [SolicitacaoController::class, 'edit'])->name('editSoliciticao');
+Route::post('/solicitacao/{id}/update', [SolicitacaoController::class, 'update'])->name('updateSoliciticao');
+// Delete
+Route::get('/solicitacao/{id}/delete', [SolicitacaoController::class, 'delete'])->name('deleteSoliciticao');
+Route::post('/solicitacao/{id}/remove', [SolicitacaoController::class, 'remove'])->name('removeSoliciticao');
