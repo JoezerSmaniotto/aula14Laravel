@@ -43,7 +43,6 @@ class UsuarioController extends Controller
 
     public function update(Request  $request, $id){
         $updatedUsuario = $request->all();
-        $updatedUsuario['importado'] = ($request->importado) ? true : false;
         if(!Usuario::find($id)->update($updatedUsuario))
             dd("Erro ao atualizar o usuário $id !");
         return redirect('/usuarios');

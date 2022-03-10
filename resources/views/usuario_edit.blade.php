@@ -36,11 +36,6 @@
                 <td><input type="text" name="celular" value="{{ $usuario->celular }}" /></td>
             </tr>
 
-            <tr>
-                <td>Adotado:</td>
-                <td><input type="checkbox" name="adotado" {{ $usuario->adotado ? 'checked' : '' }} /></td>
-            </tr>
-
             <tr align="center">
                 <td colspan="2"><input type="submit" value="Salvar" /></td>
             </tr>
