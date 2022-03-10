@@ -20,7 +20,7 @@
                 <td><input type="text" name="nomePet" /></td>
             </tr>
             <tr>
-                <td>Sexo: S ou M</td>
+                <td>Sexo: F ou M</td>
                 <td><input type="text" name="sexo" /></td>
             </tr>
             <tr>

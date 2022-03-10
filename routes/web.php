@@ -60,7 +60,7 @@ Route::post('/usuario/{id}/remove', [UsuarioController::class, 'remove'])->name(
 Route::get('/pets', [PetController::class, 'index']);
 Route::get('/pet/{id}', [PetController::class, 'show']);
 // Crete
-Route::get('/pet', [PetController::class, 'create']);
+Route::get('/pet', [PetController::class, 'create'])->name('createPet');
 Route::post('/pet', [PetController::class, 'store']);
 // Update
 Route::get('/pet/{id}/edit', [PetController::class, 'edit'])->name('editPet');

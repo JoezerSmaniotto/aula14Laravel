@@ -10,6 +10,7 @@
 
 <body>
     <h1>Pets</h1>
+    <a href="{{ route('createPet') }}">Criar</a>
     @if ($pets->count() > 0)
         <table>
             <thead>

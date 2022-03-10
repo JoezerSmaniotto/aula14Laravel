@@ -10,6 +10,7 @@
 
 <body>
     <h1>Produtos</h1>
+    <a href="/produto">Criar</a>
     @if ($produtos->count() > 0)
         <table>
             <thead>
