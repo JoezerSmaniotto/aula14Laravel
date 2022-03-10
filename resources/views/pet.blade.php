@@ -21,6 +21,7 @@
                     <th>Informações Adicionais</th>
                     <th>idade</th>
                     <th>Adotado</th>
+                    <th>Ações</th>
 
                 </tr>
             </thead>
@@ -34,7 +35,11 @@
                     <td>{{ $pet->inforAdic }}</td>
                     <td>{{ $pet->idade }}</td>
                     <td>{{ $pet->adotado ? 'Sim' : 'Não' }}</td>
+                    <td>
+                        <a href="{{ route('editPet', $pet->id) }}">Editar</a>
+                        <a href="{{ route('deletePet', $pet->id) }}">Deletar</a>
 
+                    </td>
 
                 </tr>
 

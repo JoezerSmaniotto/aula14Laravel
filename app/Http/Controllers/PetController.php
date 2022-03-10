@@ -37,4 +37,28 @@ class PetController extends Controller
         else dd('Erro ao cadastrar pet');
 
     }
+     // EDIT
+     public function edit($id){
+        return view('pet_edit',['pet'=>Pet::find($id)]);
+    }
+
+    public function update(Request  $request, $id){
+        $updatedPet = $request->all();
+        $updatedPet['adotado'] = ($request->adotado) ? true : false;
+        if(!Pet::find($id)->update($updatedPet))
+            dd("Erro ao atualizar o pet $id !");
+        return redirect('/pets');
+    }
+     // DELETE
+     public function delete($id){
+        return view('pet_remove',['pet'=>Pet::find($id)]);
+    }
+
+    public function remove(Request $request, $id){
+        if($request->confirmar === 'Deletar')
+            if(!Pet::destroy($id))
+                dd("Erro ao deletar pet $id !");
+        return redirect('/pets');
+
+    }
 }

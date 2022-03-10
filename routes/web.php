@@ -62,4 +62,9 @@ Route::get('/pet/{id}', [PetController::class, 'show']);
 // Crete
 Route::get('/pet', [PetController::class, 'create']);
 Route::post('/pet', [PetController::class, 'store']);
-
+// Update
+Route::get('/pet/{id}/edit', [PetController::class, 'edit'])->name('editPet');
+Route::post('/pet/{id}/update', [PetController::class, 'update'])->name('updatePet');
+// Delete
+Route::get('/pet/{id}/delete', [PetController::class, 'delete'])->name('deletePet');
+Route::post('/pet/{id}/remove', [PetController::class, 'remove'])->name('removePet');
