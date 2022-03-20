@@ -14,6 +14,12 @@ class Produto extends Model
         'descricao',
         'qtd_estoque',
         'preco',
-        'importado'
+        'importado',
+        'fornecedor_id'
     ];
+
+    public function fornecedores(){ // Esse metodo de referencia vai ter o Nome da tabela que ele referencia  no caso fornecedores
+        // UM PRODUTO TEM UM FORNECEDOR
+        return $this->belongsTo(Fornecedor::class);
+    }
 }
