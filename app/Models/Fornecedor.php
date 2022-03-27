@@ -11,6 +11,14 @@ class Fornecedor extends Model
     protected $table = 'fornecedores'; //pq alterei o nome para fornecedores em
     //vez fornecedors, não estou usando o padrão
 
+    //Proteção para injeção de dados no SQL
+    protected $fillable = [
+        "nome",
+        "endereco",
+        "cnpj",
+        "telefone"
+    ];
+
     public function produtos (){// nome da tabela, NÃO é o nome do MODELO.
         // UM FORNECEDOR TEM MUITOS PRODUTOS
         return $this->hasMany(Produto::class);

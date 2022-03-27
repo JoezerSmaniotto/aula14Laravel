@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\FornecedorController;
 use App\Http\Controllers\Api\ProdutoController;
 use App\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,5 +20,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/produto',[ProdutoController::class, 'index']);
-Route::get('/produto/{id}',[ProdutoController::class, 'show']);
+Route::get('/produtos',[ProdutoController::class, 'index']);
+Route::get('/produtos/{id}',[ProdutoController::class, 'show']);
+Route::post('/produtos',[ProdutoController::class, 'store']);
+
+Route::put('/produtos/{id}',[ProdutoController::class, 'update']);
+Route::delete('/produtos/{id}',[ProdutoController::class, 'delete']);
+
+Route::apiResource('fornecedores',FornecedorController::class)
+        ->parameters(["fornecedores"=>"fornecedor"]);
+
+Route::get('fornecedores/{fornecedor}/produtos',[FornecedorController::class, 'listProdutos'])->name('fornecedores.produtos');
+
+
