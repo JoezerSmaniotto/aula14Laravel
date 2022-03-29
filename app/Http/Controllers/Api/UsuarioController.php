@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Fornecedor;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
-class FornecedorController extends Controller
+class UsuarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-        return Fornecedor::all();
+        return Usuario::all();
     }
 
     /**
@@ -28,12 +28,12 @@ class FornecedorController extends Controller
     {
         try {
             return response()->json([
-                'Message' => 'Fornecedor criado com sucesso!',
-                'Fornecedor' => Fornecedor::create($request->post())
+                'Message' => 'Usuário criado com sucesso!',
+                'Usuario' =>  Usuario::create($request->post())
             ]);
         } catch (Exception $error) {
             return response()->json([
-                "Erro" => 'Não foi possível criar novo Produto!',
+                "Erro" => 'Não foi possível criar novo Usuário!',
                 "Exception"=>$error->getMessage()
             ]);
         }
@@ -42,16 +42,16 @@ class FornecedorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Fornecedor  $fornecedor
+     * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function show(Fornecedor $fornecedor)
+    public function show(Usuario $usuario)
     {
         try{
-            return $fornecedor;
+            return $usuario;
         }catch(Exception $error){
             return response()->json([
-            "Message" =>"Fornecedor não encontrado!"
+            "Message" =>"Usuário não encontrado!"
             ],404);
         }
     }
@@ -60,55 +60,53 @@ class FornecedorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Fornecedor  $fornecedor
+     * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fornecedor $fornecedor)
+    public function update(Request $request, Usuario $usuario)
     {
-        // return response()->json(($request->post()));
         try {
-            $fornecedor->update($request->all());
-            // return response()->json(($fornecedor));
+            $usuario->update($request->all());
             return response()->json([
-                'Message' => 'Fornecedor atualizado com sucesso!',
-                'Fornecedor'=>$fornecedor
+                'Message' => 'Usuário atualizado com sucesso!',
+                'Usuario'=>$usuario
             ]);
         } catch (Exception $error) {
             return response()->json([
-                "Erro" => 'Não foi possível atualizar o fornecedor!',
+                "Erro" => 'Não foi possível atualizar o Usuario!',
                 "Exception"=>$error->getMessage()
             ]);
         }
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Fornecedor  $fornecedor
+     * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fornecedor $fornecedor)
+    public function destroy(Usuario $usuario)
     {
         try{
-            if($fornecedor->delete()){
+            if($usuario->delete()){
                 return response()->json([
-                    "Message" =>"Fornecedor removido!",
-                    "Fornecedor" => $fornecedor
+                    "Message" =>"Usuário removido!",
+                    "Usuario" => $usuario
                 ]);
-                throw new Exception("Erro ao deletar Fornecedor !");
+                throw new Exception("Erro ao deletar Usuario !");
             }
         }catch(Exception $error){
             return response()->json([
-                "Message" =>"Fornecedor removido!",
-                "Fornecedor" => $error->getMessage()
+                "Message" =>"Usuario removido!",
+                "Usuario" => $error->getMessage()
             ]);
 
         }
     }
 
-
-    public function listProdutos(Fornecedor $fornecedor)
+    public function listPets(Usuario $usuario)
     {
-        return response()->json($fornecedor->load('produtos'));
+        return response()->json($usuario->load('pets'));
     }
 }

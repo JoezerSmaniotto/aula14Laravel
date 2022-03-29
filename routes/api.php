@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Api\FornecedorController;
 use App\Http\Controllers\Api\ProdutoController;
+use App\Http\Controllers\Api\SolicitacaoController;
+use App\Http\Controllers\Api\UsuarioController;
+use App\Http\Controllers\Api\PetController;
 use App\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +35,15 @@ Route::apiResource('fornecedores',FornecedorController::class)
 
 Route::get('fornecedores/{fornecedor}/produtos',[FornecedorController::class, 'listProdutos'])->name('fornecedores.produtos');
 
+Route::apiResource('solicitacoes',SolicitacaoController::class)
+        ->parameters(["solicitacoes"=>"solicitacao"]);
+
+Route::apiResource('usuarios',UsuarioController::class)
+        ->parameters(["usuarios"=>"usuario"]);
+
+Route::get('usuarios/{usuario}/pets',[UsuarioController::class, 'listPets'])->name('usuario.pets');
+
+Route::apiResource('pets',PetController::class);
+        // ->parameters(["usuarios"=>"usuario"]);
+Route::get('pets/{pet}/usuarios',[PetController::class, 'listUsuario'])->name('pet.usuarios');
 

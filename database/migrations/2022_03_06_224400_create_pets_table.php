@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('usuario_id')->references('id')->on('usuarios')->cascadeOnDelete();
             $table->text('nomePet');
             $table->text('sexo');
             $table->text('raca');

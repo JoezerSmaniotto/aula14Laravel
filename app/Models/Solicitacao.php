@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Solicitacao extends Model
 {
     use HasFactory; // Preeche as colunas com loren ipsum
+
+    protected $table = 'solicitacoes';
+
     protected $fillable = [
         'nomeUserSolicitante',
         'pet',

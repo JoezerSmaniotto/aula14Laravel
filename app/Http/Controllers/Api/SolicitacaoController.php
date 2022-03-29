@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Fornecedor;
+use App\Models\Solicitacao;
 use Illuminate\Http\Request;
 
-class FornecedorController extends Controller
+class SolicitacaoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-        return Fornecedor::all();
+        return Solicitacao::all();
     }
 
     /**
@@ -28,12 +28,12 @@ class FornecedorController extends Controller
     {
         try {
             return response()->json([
-                'Message' => 'Fornecedor criado com sucesso!',
-                'Fornecedor' => Fornecedor::create($request->post())
+                'Message' => 'Solicitação criado com sucesso!',
+                'Solicitacao' => Solicitacao::create($request->post())
             ]);
         } catch (Exception $error) {
             return response()->json([
-                "Erro" => 'Não foi possível criar novo Produto!',
+                "Erro" => 'Não foi possível criar uma nova Solicitação!',
                 "Exception"=>$error->getMessage()
             ]);
         }
@@ -42,16 +42,16 @@ class FornecedorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Fornecedor  $fornecedor
+     * @param  \App\Models\Solicitacao  $solicitacao
      * @return \Illuminate\Http\Response
      */
-    public function show(Fornecedor $fornecedor)
+    public function show(Solicitacao $solicitacao)
     {
         try{
-            return $fornecedor;
+            return $solicitacao;
         }catch(Exception $error){
             return response()->json([
-            "Message" =>"Fornecedor não encontrado!"
+            "Message" =>"Solicitação não encontrado!"
             ],404);
         }
     }
@@ -60,22 +60,20 @@ class FornecedorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Fornecedor  $fornecedor
+     * @param  \App\Models\Solicitacao  $solicitacao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fornecedor $fornecedor)
+    public function update(Request $request, Solicitacao $solicitacao)
     {
-        // return response()->json(($request->post()));
         try {
-            $fornecedor->update($request->all());
-            // return response()->json(($fornecedor));
+            $solicitacao->update($request->all());
             return response()->json([
-                'Message' => 'Fornecedor atualizado com sucesso!',
-                'Fornecedor'=>$fornecedor
+                'Message' => 'Solicitação atualizado com sucesso!',
+                'Solicitacao'=>$solicitacao
             ]);
         } catch (Exception $error) {
             return response()->json([
-                "Erro" => 'Não foi possível atualizar o fornecedor!',
+                "Erro" => 'Não foi possível atualizar sua solicitação!',
                 "Exception"=>$error->getMessage()
             ]);
         }
@@ -84,31 +82,25 @@ class FornecedorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Fornecedor  $fornecedor
+     * @param  \App\Models\Solicitacao  $solicitacao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fornecedor $fornecedor)
+    public function destroy(Solicitacao $solicitacao)
     {
         try{
-            if($fornecedor->delete()){
+            if($solicitacao->delete()){
                 return response()->json([
-                    "Message" =>"Fornecedor removido!",
-                    "Fornecedor" => $fornecedor
+                    "Message" =>"Solicitação removido!",
+                    "Solicitação" => $solicitacao
                 ]);
-                throw new Exception("Erro ao deletar Fornecedor !");
+                throw new Exception("Erro ao deletar Solicitação !");
             }
         }catch(Exception $error){
             return response()->json([
-                "Message" =>"Fornecedor removido!",
-                "Fornecedor" => $error->getMessage()
+                "Message" =>"Solicitação removida!",
+                "Solicitacao" => $error->getMessage()
             ]);
 
         }
-    }
-
-
-    public function listProdutos(Fornecedor $fornecedor)
-    {
-        return response()->json($fornecedor->load('produtos'));
     }
 }
