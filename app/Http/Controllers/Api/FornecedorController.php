@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FornecedorRequest;
 use App\Models\Fornecedor;
 use Illuminate\Http\Request;
+use Exception;
 
 class FornecedorController extends Controller
 {
@@ -13,9 +15,15 @@ class FornecedorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Fornecedor::all();
+        $perPage = $request->query('per_page');
+        $fornecedorPaginated = Fornecedor::paginate($perPage);
+        $fornecedorPaginated->appends([
+            'per_page'=>$perPage
+        ]);
+        return response()->json($fornecedorPaginated);
+        // return Fornecedor::all();
     }
 
     /**
@@ -24,7 +32,7 @@ class FornecedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FornecedorRequest $request)
     {
         try {
             return response()->json([
@@ -110,5 +118,17 @@ class FornecedorController extends Controller
     public function listProdutos(Fornecedor $fornecedor)
     {
         return response()->json($fornecedor->load('produtos'));
+    }
+
+    private function errorMessage($error, $message, $statusHttp, $trace = false){
+
+        $messageError=[
+            'Erro'=> $message,
+            'Exception'=>$error->getMessage(),
+            'Debug'=> $error
+        ];
+        $statusHttp = $error->status ?? $statusHttp ?? 500;
+        $trace && $messageError['Trace'] = $error->getTrace();
+        return response( $messageError, $statusHttp);
     }
 }
