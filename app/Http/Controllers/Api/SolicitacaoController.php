@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SolicitacaoRequest;
 use App\Models\Solicitacao;
 use Illuminate\Http\Request;
+use Exception;
 
 class SolicitacaoController extends Controller
 {
@@ -13,9 +15,15 @@ class SolicitacaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Solicitacao::all();
+        $perPage = $request->query('per_page');
+        $solicitacaoPaginated = Solicitacao::paginate($perPage);
+        $solicitacaoPaginated->appends([
+            'per_page'=>$perPage
+        ]);
+        return response()->json($solicitacaoPaginated);
+        //return Solicitacao::all();
     }
 
     /**
@@ -24,7 +32,7 @@ class SolicitacaoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SolicitacaoRequest $request)
     {
         try {
             return response()->json([
@@ -102,5 +110,17 @@ class SolicitacaoController extends Controller
             ]);
 
         }
+    }
+
+    private function errorMessage($error, $message, $statusHttp, $trace = false){
+
+        $messageError=[
+            'Erro'=> $message,
+            'Exception'=>$error->getMessage(),
+            'Debug'=> $error
+        ];
+        $statusHttp = $error->status ?? $statusHttp ?? 500;
+        $trace && $messageError['Trace'] = $error->getTrace();
+        return response( $messageError, $statusHttp);
     }
 }
