@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProdutoRequest;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 use Exception;
 
 class ProdutoController extends Controller
 {
-    public function index(){
-        return response()->json(Produto::all());
+    public function index(Request $request){
+        $perPage = $request->query('per_page');
+        $produtosPaginated = Produto::paginate($perPage);
+        $produtosPaginated->appends([
+            'per_page'=>$perPage
+        ]);
+        return response()->json($produtosPaginated);
     }
 
     public function show($id){
@@ -33,8 +39,10 @@ class ProdutoController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(ProdutoRequest $request){
         try {
+            // $request->validate([
+            // ]);
             $newProduto = $request->post();
             $newProduto['importado'] = ($request->importado) ? true : false;
             $storedProtudo = Produto::create($newProduto);
@@ -44,7 +52,7 @@ class ProdutoController extends Controller
             ]);
         } catch (Exception $error) {
             $message = 'Erro ao inserir o novo Produto!';
-            return $this->errorMessage($error, $message, 500, true);
+            return $this->errorMessage($error, $message, 500, false);
         }
     }
 
@@ -77,13 +85,15 @@ class ProdutoController extends Controller
     }
 
 
-    private function errorMessage($error, $message, $statusCode, $trace = false){
+    private function errorMessage($error, $message, $statusHttp, $trace = false){
 
         $messageError=[
             'Erro'=> $message,
-            'Exception'=>$error->getMessage()
+            'Exception'=>$error->getMessage(),
+            'Debug'=> $error
         ];
+        $statusHttp = $error->status ?? $statusHttp ?? 500;
         $trace && $messageError['Trace'] = $error->getTrace();
-        return response( $messageError, $statusCode);
+        return response( $messageError, $statusHttp);
     }
 }
