@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PetRequest;
 use App\Models\Pet;
 use Illuminate\Http\Request;
+use Exception;
 
 class PetController extends Controller
 {
@@ -13,9 +15,15 @@ class PetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Pet::all();
+        $perPage = $request->query('per_page');
+        $petPaginated = Pet::paginate($perPage);
+        $petPaginated->appends([
+            'per_page'=>$perPage
+        ]);
+        return response()->json($petPaginated);
+        // return Pet::all();
     }
 
     /**
@@ -24,7 +32,7 @@ class PetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PetRequest $request)
     {
         try {
             return response()->json([
@@ -106,6 +114,18 @@ class PetController extends Controller
 
     public function listUsuario(Pet $pet)
     {
-        return response()->json($pet->load('usuarios'));
+        return response()->json($pet->load('users'));
+    }
+
+    private function errorMessage($error, $message, $statusHttp, $trace = false){
+
+        $messageError=[
+            'Erro'=> $message,
+            'Exception'=>$error->getMessage(),
+            'Debug'=> $error
+        ];
+        $statusHttp = $error->status ?? $statusHttp ?? 500;
+        $trace && $messageError['Trace'] = $error->getTrace();
+        return response( $messageError, $statusHttp);
     }
 }
