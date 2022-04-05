@@ -19,12 +19,12 @@ class Pet extends Model
         'raca',
         'inforAdic',
         'idade',
-        'usuario_id' // CHAVE ESTRANGEIRA
+        'user_id' // CHAVE ESTRANGEIRA
     ];
 
     // Nome da tabela que referencia
-    public function usuarios(){
+    public function users(){
         // Nome do modelo que referencia
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(User::class);
     }
 }
