@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Usuario;
+use App\Http\Requests\UsuarioRequest;
+use App\Models\User as Usuario;
 use Illuminate\Http\Request;
+use Exception;
 
 class UsuarioController extends Controller
 {
@@ -13,9 +15,15 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Usuario::all();
+        $perPage = $request->query('per_page');
+        $usuriosPaginated = Usuario::paginate($perPage);
+        $usuriosPaginated->appends([
+            'per_page'=>$perPage
+        ]);
+        return response()->json($usuriosPaginated);
+        // return Usuario::all();
     }
 
     /**
@@ -24,7 +32,7 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsuarioRequest $request)
     {
         try {
             return response()->json([
@@ -108,5 +116,17 @@ class UsuarioController extends Controller
     public function listPets(Usuario $usuario)
     {
         return response()->json($usuario->load('pets'));
+    }
+
+    private function errorMessage($error, $message, $statusHttp, $trace = false){
+
+        $messageError=[
+            'Erro'=> $message,
+            'Exception'=>$error->getMessage(),
+            'Debug'=> $error
+        ];
+        $statusHttp = $error->status ?? $statusHttp ?? 500;
+        $trace && $messageError['Trace'] = $error->getTrace();
+        return response( $messageError, $statusHttp);
     }
 }
